@@ -10,6 +10,7 @@ import JobSeekerProfile from "./pages/profile/JobSeekerProfile";
 import EmployerProfile from "./pages/profile/EmployerProfile";
 
 import AppLayout from "./components/layout/AppLayout";
+import LandingPage from "./pages/LandingPage";
 
 const ProtectedRoute = ({ children }) => {
   const { user, loading } = useContext(AuthContext);
@@ -33,6 +34,7 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
+        <Route path="/" element={<LandingPage />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
 
