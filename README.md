@@ -116,7 +116,7 @@ JobListingPortal/
 │   │   └── api/
 │   └── package.json
 |_________________________
-
+```
 
 ## Environment Variables
 
