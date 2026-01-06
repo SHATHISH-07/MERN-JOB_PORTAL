@@ -174,7 +174,3 @@ POST /api/employer/profile/me
 
 GET /api/employer/profile/me
 ```
-
-```
-
-```
