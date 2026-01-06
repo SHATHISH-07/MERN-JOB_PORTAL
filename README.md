@@ -93,7 +93,7 @@ Note: Job listings and applications are currently mocked and will be connected t
 
 ## Project Structure
 
-````text
+```text
 JobListingPortal/
 ├── backend/
 │   ├── src/
@@ -116,6 +116,7 @@ JobListingPortal/
 │   │   └── api/
 │   └── package.json
 |_________________________
+
 ```
 
 ## Environment Variables
@@ -173,4 +174,7 @@ POST /api/employer/profile/me
 
 GET /api/employer/profile/me
 ```
-````
+
+```
+
+```
