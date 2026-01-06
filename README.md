@@ -1,173 +1,169 @@
-Job Listing Portal (MERN Stack)
+# Job Listing Portal (MERN Stack)
 
 A role-based Job Listing Portal built using the MERN stack, supporting Job Seekers and Employers with authentication, profile management, and dashboard insights.
 
-This project is designed with clean architecture, scalable backend APIs, and a modern dashboard UI.
+This project follows clean architecture principles with scalable backend APIs and a modern dashboard-based frontend.
 
-🚀 Features Implemented So Far
-🔐 Authentication
+---
 
-User registration & login
+## Features Implemented So Far
 
-Secure password hashing using bcrypt
+### User Authentication
 
-JWT-based authentication
+- User registration and login
+- Secure password hashing using bcrypt
+- JWT-based authentication
+- Role-based access:
+  - JOB_SEEKER
+  - EMPLOYER
+- Persistent login using the `/me` API
 
-Role-based users:
+---
 
-JOB_SEEKER
+### Profile Management
 
-EMPLOYER
+#### Job Seeker Profile
 
-Persistent login using /me API
+- Full name
+- Phone number and location
+- Current role and experience
+- Skills and certifications
+- Resume URL
+- LinkedIn and portfolio links
+- Job preferences
+- Profile completion percentage calculation
 
-👤 Profile Management
-Job Seeker Profile
+#### Employer Profile
 
-Full name
+- Company name and description
+- Industry and company type
+- Company size and founded year
+- Location and contact details
+- Company website and logo URL
 
-Phone & location
+---
 
-Current role & experience
+### Dashboards
 
-Skills & certifications
+#### Job Seeker Dashboard
 
-Resume URL
+- Profile completion status
+- Applied jobs (mock data)
+- Recommended jobs (mock data)
 
-LinkedIn & portfolio links
+#### Employer Dashboard
 
-Job preferences
+- Job statistics (mock data)
+- Posted jobs (mock data)
+- Recent applications (mock data)
 
-Profile completion calculation
+Note: Job listings and applications are currently mocked and will be connected to real APIs in future updates.
 
-Employer Profile
+---
 
-Company name & description
+### UI Layout
 
-Industry & company type
+- Collapsible sidebar navigation
+- Topbar with role-based title
+- Sidebar user section linking to profile
+- Role-based rendering throughout the application
 
-Company size & founded year
+---
 
-Location & contact details
+## Tech Stack
 
-Company website & logo URL
+### Backend
 
-📊 Dashboards
-Job Seeker Dashboard
+- Node.js
+- Express.js
+- MongoDB with Mongoose
+- JSON Web Tokens (JWT)
+- bcrypt
+- dotenv
 
-Profile completion percentage
+### Frontend
 
-Applied jobs (mock data)
+- React
+- React Router
+- Context API
+- Axios
+- Tailwind CSS
 
-Recommended jobs (mock data)
+---
 
-Employer Dashboard
+## Project Structure
 
-Job statistics (mock data)
-
-Posted jobs (mock data)
-
-Recent applications (mock data)
-
-⚠️ Job listings and applications are mocked for now and will be connected to real APIs later.
-
-🧭 UI Layout
-
-Collapsible sidebar with navigation
-
-Topbar with role-aware title
-
-Sidebar user section with profile navigation
-
-Role-based rendering throughout the app
-
-🛠️ Tech Stack
-Backend
-
-Node.js
-
-Express.js
-
-MongoDB + Mongoose
-
-JWT Authentication
-
-bcrypt
-
-dotenv
-
-Frontend
-
-React
-
-React Router
-
-Context API
-
-Axios
-
-Tailwind CSS
-
-Lucide Icons
-
-📁 Project Structure
+````text
 JobListingPortal/
 ├── backend/
-│ ├── src/
-│ │ ├── models/
-│ │ ├── controllers/
-│ │ ├── routes/
-│ │ ├── middleware/
-│ │ └── app.js
-│ ├── .env
-│ └── package.json
+│   ├── src/
+│   │   ├── models/
+│   │   ├── controllers/
+│   │   ├── routes/
+│   │   ├── middleware/
+│   │   └── app.js
+│   ├── .env
+│   └── package.json
 │
 ├── frontend/
-│ ├── src/
-│ │ ├── components/
-│ │ │ └── layout/
-│ │ ├── pages/
-│ │ │ ├── profile/
-│ │ │ └── Dashboard.jsx
-│ │ ├── context/
-│ │ └── api/
-│ └── package.json
+│   ├── src/
+│   │   ├── components/
+│   │   │   └── layout/
+│   │   ├── pages/
+│   │   │   ├── profile/
+│   │   │   └── Dashboard.jsx
+│   │   ├── context/
+│   │   └── api/
+│   └── package.json
+|_________________________
 
-🔐 Environment Variables
 
-Create a .env file inside backend/:
+## Environment Variables
 
+```text
 PORT=5000
 MONGO_URI=your_mongodb_connection_string
 JWT_SECRET=your_secret_key
+````
 
-⚠️ .env is ignored by git. Use .env.example for reference.
+## Running the Project
 
-▶️ Running the Project
-Backend
+### Backend
+
+```bash
 cd backend
 npm install
 npm run dev
+```
 
-Frontend
+### Frontend
+
+```bash
 cd frontend
 npm install
 npm run dev
+```
 
-Frontend runs on http://localhost:5173
-Backend runs on http://localhost:5000
+---
 
-🧪 API Endpoints (So Far)
-Auth
+The backend runs on http://localhost:5000
+The frontend runs on http://localhost:5173
 
+## API Endpoints
+
+### Authentication
+
+```text
 POST /api/auth/register
 
 POST /api/auth/login
 
 GET /api/auth/me
+```
 
-Profiles
+### Profiles
 
+```text
 POST /api/jobseeker/profile/me
 
 GET /api/jobseeker/profile/me
@@ -175,3 +171,4 @@ GET /api/jobseeker/profile/me
 POST /api/employer/profile/me
 
 GET /api/employer/profile/me
+```
