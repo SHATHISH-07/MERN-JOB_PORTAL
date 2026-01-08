@@ -22,7 +22,7 @@ const LandingPage = () => {
 
                     <nav className="hidden md:flex items-center gap-8 text-sm font-medium text-zinc-400">
                         <a href="#features" className="hover:text-white transition">Product</a>
-                        <a href="#how-it-works" className="hover:text-white transition">Workflow</a>
+                        <a href="#stats" className="hover:text-white transition">Stats</a>
                         <a href="#pricing" className="hover:text-white transition">Enterprise</a>
                     </nav>
 
@@ -96,7 +96,7 @@ const LandingPage = () => {
                             </div>
 
                             {/* Main Content */}
-                            <div className="col-span-3 space-y-6">
+                            <div id="#stats" className="col-span-3 space-y-6">
                                 {/* Stats Row */}
                                 <div className="grid grid-cols-3 gap-4">
                                     <div className="h-24 bg-[#111] border border-white/5 p-4 flex flex-col justify-between">
