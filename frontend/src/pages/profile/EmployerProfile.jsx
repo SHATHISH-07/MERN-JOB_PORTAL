@@ -1,218 +1,265 @@
 import { useEffect, useState } from "react";
 import { getEmployerProfile, saveEmployerProfile } from "../../api/employerProfile";
-import { Building2, Globe, Users, Briefcase, Calendar, MapPin, Mail, Phone, Image, Save } from "lucide-react";
+import { Loader2, Building2, Globe, MapPin } from "lucide-react";
 
 const EmployerProfile = () => {
     const token = localStorage.getItem("token");
     const [loading, setLoading] = useState(false);
+    const [saving, setSaving] = useState(false);
+
     const [form, setForm] = useState({
-        companyName: "", industry: "", companyDescription: "", companyWebsite: "",
-        companySize: "", companyType: "", foundedYear: "", location: "",
-        contactEmail: "", contactPhone: "", logoUrl: "",
+        companyName: "",
+        industry: "",
+        companyDescription: "",
+        companyWebsite: "",
+        companySize: "",
+        companyType: "",
+        foundedYear: "",
+        location: "",
+        contactEmail: "",
+        contactPhone: "",
+        logoUrl: "",
     });
 
     useEffect(() => {
+        setLoading(true);
         getEmployerProfile(token)
             .then((res) => setForm(res.data))
-            .catch(() => { });
+            .catch(() => { })
+            .finally(() => setLoading(false));
     }, []);
 
     const submit = async (e) => {
         e.preventDefault();
-        setLoading(true);
+        setSaving(true);
         try {
             await saveEmployerProfile(form, token);
-            alert("Profile saved");
+            alert("Company profile saved successfully");
         } finally {
-            setLoading(false);
+            setSaving(false);
         }
     };
 
-    // Professional Styles
-    const labelClass = "block text-xs font-semibold text-zinc-400 uppercase tracking-wider mb-1.5";
-    const inputWrapperClass = "relative flex items-center";
-    const iconClass = "absolute left-3 w-4 h-4 text-zinc-500 pointer-events-none";
-    const inputClass = "w-full bg-zinc-950 border border-zinc-800 rounded-md py-2.5 pl-10 pr-4 text-sm text-zinc-100 placeholder:text-zinc-600 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors";
-    const selectClass = "w-full bg-zinc-950 border border-zinc-800 rounded-md py-2.5 pl-10 pr-4 text-sm text-zinc-100 focus:outline-none focus:border-blue-500 transition-colors appearance-none";
+    if (loading) {
+        return (
+            <div className="min-h-screen bg-black flex items-center justify-center">
+                <Loader2 className="w-6 h-6 text-zinc-500 animate-spin" />
+            </div>
+        );
+    }
 
     return (
-        <div className="min-h-screen bg-zinc-950 text-zinc-100 p-6 md:p-12 font-sans">
-            <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8">
+        <div className="min-h-screen bg-[#09090b] text-zinc-200 selection:bg-zinc-800 selection:text-zinc-100 font-sans">
+            {/* Ambient Background Glow */}
+            <div className="fixed inset-0 z-0 pointer-events-none">
+                <div className="absolute top-0 right-1/4 w-96 h-96 bg-zinc-800/20 rounded-full blur-[128px]" />
+                <div className="absolute bottom-0 left-1/4 w-96 h-96 bg-emerald-900/10 rounded-full blur-[128px]" />
+            </div>
 
-                {/* --- LEFT SIDEBAR: COMPANY PREVIEW --- */}
-                <div className="lg:col-span-4 space-y-6">
-                    <div className="sticky top-8">
-                        <div className="bg-zinc-900 border border-zinc-800 rounded-lg p-6 shadow-sm">
-                            <div className="flex flex-col items-start pb-6 border-b border-zinc-800">
-                                <div className="w-16 h-16 bg-zinc-800 rounded-lg flex items-center justify-center mb-4 border border-zinc-700 overflow-hidden">
-                                    {form.logoUrl ? <img src={form.logoUrl} alt="Logo" className="w-full h-full object-cover" /> : <Building2 size={28} className="text-zinc-500" />}
-                                </div>
-                                <h2 className="text-xl font-bold text-white leading-tight">{form.companyName || "Company Name"}</h2>
-                                <span className="inline-block mt-2 px-2.5 py-0.5 rounded-full bg-blue-500/10 text-blue-400 text-xs font-medium border border-blue-500/20">
-                                    {form.industry || "Industry"}
-                                </span>
-                            </div>
-
-                            <div className="py-6 space-y-3">
-                                <div className="flex items-center gap-3 text-sm text-zinc-400">
-                                    <Users size={16} />
-                                    <span>{form.companySize || "Size not set"}</span>
-                                </div>
-                                <div className="flex items-center gap-3 text-sm text-zinc-400">
-                                    <Briefcase size={16} />
-                                    <span>{form.companyType || "Type not set"}</span>
-                                </div>
-                                <div className="flex items-center gap-3 text-sm text-zinc-400">
-                                    <MapPin size={16} />
-                                    <span className="truncate">{form.location || "Location not set"}</span>
-                                </div>
-                                <div className="flex items-center gap-3 text-sm text-zinc-400">
-                                    <Globe size={16} />
-                                    <span className="truncate text-blue-400 hover:underline cursor-pointer">{form.companyWebsite || "Website"}</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <button
-                            onClick={submit}
-                            disabled={loading}
-                            className="mt-4 w-full bg-white text-black font-semibold py-3 rounded-md hover:bg-zinc-200 transition-colors flex items-center justify-center gap-2"
-                        >
-                            {loading ? "Saving..." : <><Save size={18} /> Save Profile</>}
-                        </button>
+            <div className="relative z-10 max-w-6xl mx-auto px-6 py-12 lg:py-20">
+                {/* Header Section */}
+                <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12 border-b border-zinc-800 pb-8">
+                    <div>
+                        <h1 className="text-3xl md:text-4xl font-bold tracking-tight text-white mb-2">
+                            Company Profile
+                        </h1>
+                        <p className="text-zinc-400">
+                            Manage your organization's brand and public details.
+                        </p>
                     </div>
+                    <button
+                        onClick={submit}
+                        disabled={saving}
+                        className="h-11 px-8 rounded-full bg-white text-black font-medium hover:bg-zinc-200 disabled:opacity-50 disabled:cursor-not-allowed transition-all active:scale-95 flex items-center justify-center min-w-35"
+                    >
+                        {saving ? (
+                            <Loader2 className="w-4 h-4 animate-spin" />
+                        ) : (
+                            "Save Profile"
+                        )}
+                    </button>
                 </div>
 
-                {/* --- RIGHT CONTENT: EDIT FORM --- */}
-                <div className="lg:col-span-8 space-y-8">
-                    <div>
-                        <h1 className="text-3xl font-bold tracking-tight">Company Profile</h1>
-                        <p className="text-zinc-400 mt-1">Establish your brand presence to attract top talent.</p>
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
+
+                    {/* Left Column: Live Card Preview */}
+                    <div className="lg:col-span-4 space-y-8 order-2 lg:order-1">
+                        <div className="sticky top-12">
+                            <h3 className="text-sm font-semibold text-white uppercase tracking-wider mb-4">
+                                Card Preview
+                            </h3>
+                            {/* Preview Card */}
+                            <div className="bg-zinc-900/50 border border-zinc-800 rounded-xl p-6 shadow-2xl backdrop-blur-sm">
+                                <div className="flex items-start justify-between mb-6">
+                                    <div className="w-16 h-16 rounded-lg bg-zinc-800 border border-zinc-700 flex items-center justify-center overflow-hidden">
+                                        {form.logoUrl ? (
+                                            <img src={form.logoUrl} alt="Logo" className="w-full h-full object-cover" />
+                                        ) : (
+                                            <Building2 className="w-8 h-8 text-zinc-600" />
+                                        )}
+                                    </div>
+                                    <div className="px-3 py-1 rounded-full bg-zinc-800/50 border border-zinc-700 text-xs text-zinc-400">
+                                        {form.companyType || "Type"}
+                                    </div>
+                                </div>
+                                <div>
+                                    <h4 className="text-xl font-bold text-white mb-1">
+                                        {form.companyName || "Company Name"}
+                                    </h4>
+                                    <p className="text-sm text-zinc-500 mb-4">
+                                        {form.industry || "Industry"}
+                                    </p>
+                                    <div className="space-y-2 text-sm text-zinc-400">
+                                        <div className="flex items-center gap-2">
+                                            <MapPin className="w-4 h-4 text-zinc-600" />
+                                            <span>{form.location || "Location"}</span>
+                                        </div>
+                                        <div className="flex items-center gap-2">
+                                            <Globe className="w-4 h-4 text-zinc-600" />
+                                            <span className="truncate max-w-50">{form.companyWebsite || "Website"}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <p className="text-xs text-zinc-600 mt-4 px-2">
+                                This is how your company card will appear to job seekers in search results.
+                            </p>
+                        </div>
                     </div>
 
-                    {/* Overview */}
-                    <section className="bg-zinc-900 border border-zinc-800 rounded-lg p-6">
-                        <h3 className="text-lg font-semibold border-b border-zinc-800 pb-4 mb-6 flex items-center gap-2">
-                            <Building2 size={18} className="text-zinc-400" /> Essentials
-                        </h3>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div>
-                                <label className={labelClass}>Company Name</label>
-                                <div className={inputWrapperClass}>
-                                    <Building2 className={iconClass} />
-                                    <input className={inputClass} placeholder="Acme Corp" value={form.companyName} onChange={(e) => setForm({ ...form, companyName: e.target.value })} />
+                    {/* Right Column: Form */}
+                    <div className="lg:col-span-8 space-y-12 order-1 lg:order-2">
+
+                        {/* Section: Essentials */}
+                        <section className="space-y-6">
+                            <SectionHeader title="Essentials" subtitle="Core information about your organization." />
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-6">
+                                <Field label="Company Name" value={form.companyName} onChange={v => setForm({ ...form, companyName: v })} placeholder="e.g. Acme Corp" />
+                                <Field label="Industry" value={form.industry} onChange={v => setForm({ ...form, industry: v })} placeholder="e.g. Fintech, Healthcare" />
+                                <Field label="Website URL" value={form.companyWebsite} onChange={v => setForm({ ...form, companyWebsite: v })} placeholder="https://..." />
+                                <Field label="Headquarters" value={form.location} onChange={v => setForm({ ...form, location: v })} placeholder="City, Country" />
+                                <div className="md:col-span-2">
+                                    <Field label="Logo URL" value={form.logoUrl} onChange={v => setForm({ ...form, logoUrl: v })} placeholder="https://..." />
+                                    <p className="text-[10px] text-zinc-500 mt-1.5">Provide a direct link to a transparent PNG or SVG for best results.</p>
                                 </div>
                             </div>
-                            <div>
-                                <label className={labelClass}>Industry</label>
-                                <div className={inputWrapperClass}>
-                                    <Briefcase className={iconClass} />
-                                    <input className={inputClass} placeholder="e.g. Fintech" value={form.industry} onChange={(e) => setForm({ ...form, industry: e.target.value })} />
-                                </div>
-                            </div>
-                            <div className="md:col-span-2">
-                                <label className={labelClass}>Description</label>
-                                <textarea
-                                    className={`${inputClass} min-h-[120px] pl-4`}
-                                    placeholder="Tell us about your mission..."
+                        </section>
+
+                        {/* Section: About */}
+                        <section className="space-y-6">
+                            <SectionHeader title="About" subtitle="Tell candidates what makes your company unique." />
+                            <div className="space-y-6">
+                                <TextArea
+                                    label="Company Description"
                                     value={form.companyDescription}
-                                    onChange={(e) => setForm({ ...form, companyDescription: e.target.value })}
+                                    onChange={v => setForm({ ...form, companyDescription: v })}
+                                    placeholder="Share your mission, vision, and culture..."
                                 />
                             </div>
-                            <div>
-                                <label className={labelClass}>Website URL</label>
-                                <div className={inputWrapperClass}>
-                                    <Globe className={iconClass} />
-                                    <input className={inputClass} placeholder="https://..." value={form.companyWebsite} onChange={(e) => setForm({ ...form, companyWebsite: e.target.value })} />
-                                </div>
-                            </div>
-                            <div>
-                                <label className={labelClass}>Logo URL</label>
-                                <div className={inputWrapperClass}>
-                                    <Image className={iconClass} />
-                                    <input className={inputClass} placeholder="https://..." value={form.logoUrl} onChange={(e) => setForm({ ...form, logoUrl: e.target.value })} />
-                                </div>
-                            </div>
-                        </div>
-                    </section>
+                        </section>
 
-                    {/* Details */}
-                    <section className="bg-zinc-900 border border-zinc-800 rounded-lg p-6">
-                        <h3 className="text-lg font-semibold border-b border-zinc-800 pb-4 mb-6 flex items-center gap-2">
-                            <Users size={18} className="text-zinc-400" /> Structure
-                        </h3>
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                            <div>
-                                <label className={labelClass}>Size</label>
-                                <div className={inputWrapperClass}>
-                                    <Users className={iconClass} />
-                                    <select className={selectClass} value={form.companySize} onChange={(e) => setForm({ ...form, companySize: e.target.value })}>
-                                        <option value="">Select</option>
-                                        <option value="1-10">1-10</option>
-                                        <option value="11-50">11-50</option>
-                                        <option value="51-200">51-200</option>
-                                        <option value="500+">500+</option>
-                                    </select>
-                                </div>
+                        {/* Section: Details */}
+                        <section className="space-y-6">
+                            <SectionHeader title="Organization Details" subtitle="Help candidates understand your scale and structure." />
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                                <Select
+                                    label="Company Size"
+                                    value={form.companySize}
+                                    options={["1-10", "11-50", "51-200", "201-500", "500-1000", "1000+"]}
+                                    onChange={v => setForm({ ...form, companySize: v })}
+                                />
+                                <Select
+                                    label="Company Type"
+                                    value={form.companyType}
+                                    options={["Startup", "MNC", "Agency", "Product Based", "Non-Profit"]}
+                                    onChange={v => setForm({ ...form, companyType: v })}
+                                />
+                                <Field label="Founded Year" value={form.foundedYear} onChange={v => setForm({ ...form, foundedYear: v })} placeholder="e.g. 2015" />
                             </div>
+                        </section>
 
-                            <div>
-                                <label className={labelClass}>Type</label>
-                                <div className={inputWrapperClass}>
-                                    <Briefcase className={iconClass} />
-                                    <select className={selectClass} value={form.companyType} onChange={(e) => setForm({ ...form, companyType: e.target.value })}>
-                                        <option value="">Select</option>
-                                        <option value="STARTUP">Startup</option>
-                                        <option value="MNC">MNC</option>
-                                        <option value="AGENCY">Agency</option>
-                                        <option value="PRODUCT">Product</option>
-                                    </select>
-                                </div>
+                        {/* Section: Contact */}
+                        <section className="space-y-6 pb-12">
+                            <SectionHeader title="Contact Information" subtitle="Private details for administrative purposes." />
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <Field label="Contact Email" value={form.contactEmail} onChange={v => setForm({ ...form, contactEmail: v })} placeholder="hr@company.com" />
+                                <Field label="Contact Phone" value={form.contactPhone} onChange={v => setForm({ ...form, contactPhone: v })} placeholder="+1 (555) ..." />
                             </div>
-
-                            <div>
-                                <label className={labelClass}>Founded</label>
-                                <div className={inputWrapperClass}>
-                                    <Calendar className={iconClass} />
-                                    <input className={inputClass} placeholder="Year" value={form.foundedYear} onChange={(e) => setForm({ ...form, foundedYear: e.target.value })} />
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-
-                    {/* Contact */}
-                    <section className="bg-zinc-900 border border-zinc-800 rounded-lg p-6">
-                        <h3 className="text-lg font-semibold border-b border-zinc-800 pb-4 mb-6 flex items-center gap-2">
-                            <Phone size={18} className="text-zinc-400" /> Contact
-                        </h3>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div className="md:col-span-2">
-                                <label className={labelClass}>HQ Location</label>
-                                <div className={inputWrapperClass}>
-                                    <MapPin className={iconClass} />
-                                    <input className={inputClass} placeholder="Headquarters Location" value={form.location} onChange={(e) => setForm({ ...form, location: e.target.value })} />
-                                </div>
-                            </div>
-                            <div>
-                                <label className={labelClass}>Contact Email</label>
-                                <div className={inputWrapperClass}>
-                                    <Mail className={iconClass} />
-                                    <input className={inputClass} placeholder="hr@company.com" value={form.contactEmail} onChange={(e) => setForm({ ...form, contactEmail: e.target.value })} />
-                                </div>
-                            </div>
-                            <div>
-                                <label className={labelClass}>Contact Phone</label>
-                                <div className={inputWrapperClass}>
-                                    <Phone className={iconClass} />
-                                    <input className={inputClass} placeholder="+1 ..." value={form.contactPhone} onChange={(e) => setForm({ ...form, contactPhone: e.target.value })} />
-                                </div>
-                            </div>
-                        </div>
-                    </section>
+                        </section>
+                    </div>
                 </div>
             </div>
         </div>
     );
 };
+
+/* --- Shared UI Components --- */
+
+const SectionHeader = ({ title, subtitle }) => (
+    <div className="border-b border-zinc-800/50 pb-4 mb-2">
+        <h3 className="text-lg font-medium text-white">{title}</h3>
+        {subtitle && <p className="text-sm text-zinc-500 mt-1">{subtitle}</p>}
+    </div>
+);
+
+const Field = ({ label, value, onChange, placeholder, type = "text" }) => (
+    <div className="group">
+        <label className="block text-xs font-medium text-zinc-400 mb-2 uppercase tracking-wide group-focus-within:text-white transition-colors">
+            {label}
+        </label>
+        <input
+            type={type}
+            value={value}
+            onChange={(e) => onChange(e.target.value)}
+            placeholder={placeholder}
+            className="w-full bg-zinc-900/50 border border-zinc-800 rounded-lg px-4 py-3 text-sm text-zinc-100 placeholder:text-zinc-700 
+            focus:outline-none focus:bg-zinc-900 focus:border-zinc-600 focus:ring-1 focus:ring-zinc-600 transition-all duration-200"
+        />
+    </div>
+);
+
+const TextArea = ({ label, value, onChange, placeholder }) => (
+    <div className="group">
+        <label className="block text-xs font-medium text-zinc-400 mb-2 uppercase tracking-wide group-focus-within:text-white transition-colors">
+            {label}
+        </label>
+        <textarea
+            value={value}
+            onChange={(e) => onChange(e.target.value)}
+            placeholder={placeholder}
+            rows={5}
+            className="w-full bg-zinc-900/50 border border-zinc-800 rounded-lg px-4 py-3 text-sm text-zinc-100 placeholder:text-zinc-700 
+            focus:outline-none focus:bg-zinc-900 focus:border-zinc-600 focus:ring-1 focus:ring-zinc-600 transition-all duration-200 resize-none"
+        />
+    </div>
+);
+
+const Select = ({ label, value, options, onChange }) => (
+    <div className="group">
+        <label className="block text-xs font-medium text-zinc-400 mb-2 uppercase tracking-wide group-focus-within:text-white transition-colors">
+            {label}
+        </label>
+        <div className="relative">
+            <select
+                value={value}
+                onChange={(e) => onChange(e.target.value)}
+                className="w-full bg-zinc-900/50 border border-zinc-800 rounded-lg px-4 py-3 text-sm text-zinc-100 appearance-none 
+                focus:outline-none focus:bg-zinc-900 focus:border-zinc-600 focus:ring-1 focus:ring-zinc-600 transition-all duration-200 cursor-pointer"
+            >
+                <option value="" disabled>Select</option>
+                {options.map((o) => (
+                    <option key={o} value={o.toUpperCase().replace(" ", "_")}>
+                        {o}
+                    </option>
+                ))}
+            </select>
+            <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none opacity-50">
+                <svg width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M1 1L5 5L9 1" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+            </div>
+        </div>
+    </div>
+);
 
 export default EmployerProfile;
