@@ -8,7 +8,6 @@ const Dashboard = () => {
 
     const [profileCompletion, setProfileCompletion] = useState(0);
 
-    // ---------------- MOCK DATA ----------------
 
     // Job Seeker
     const appliedJobs = [
@@ -39,7 +38,6 @@ const Dashboard = () => {
         { id: 2, candidate: "Jane Smith", job: "Backend Engineer", status: "Reviewed" },
     ];
 
-    // ---------------- EFFECTS ----------------
 
     useEffect(() => {
         if (user?.role === "JOB_SEEKER") {
@@ -49,7 +47,6 @@ const Dashboard = () => {
         }
     }, []);
 
-    // ---------------- HELPERS ----------------
 
     const calculateProfileCompletion = (profileData) => {
         const fields = [
@@ -181,7 +178,6 @@ const Dashboard = () => {
     );
 };
 
-// ---------------- REUSABLE STAT CARD ----------------
 const StatCard = ({ label, value }) => (
     <div className="bg-[#181818] border border-white/10 rounded-xl p-6 text-center">
         <p className="text-gray-400 text-sm">{label}</p>

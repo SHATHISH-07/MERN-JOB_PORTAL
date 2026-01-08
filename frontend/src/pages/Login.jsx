@@ -22,7 +22,6 @@ const Login = () => {
 
     return (
         <div className="min-h-screen w-full grid grid-cols-1 md:grid-cols-2 bg-[#212121]">
-            {/* LEFT SIDE - JOB PORTAL UI DESIGN */}
             <div className="hidden md:flex flex-col relative overflow-hidden bg-[#181818] border-r border-white/5 h-full">
                 {/* Background Pattern */}
                 <div

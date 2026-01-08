@@ -47,7 +47,7 @@ const LandingPage = () => {
                     <span className="text-xs font-mono text-zinc-300 tracking-wider">v2.0 NOW AVAILABLE FOR TEAMS</span>
                 </div>
 
-                <h2 className="text-5xl md:text-8xl font-bold tracking-tighter leading-[0.9] mb-8 bg-gradient-to-b from-white to-zinc-500 bg-clip-text text-transparent">
+                <h2 className="text-5xl md:text-8xl font-bold tracking-tighter leading-[0.9] mb-8 bg-linear-to-b from-white to-zinc-500 bg-clip-text text-transparent">
                     Hire the top 1% <br />
                     <span className="text-white block mt-2">without the noise.</span>
                 </h2>
@@ -72,11 +72,11 @@ const LandingPage = () => {
                 </div>
 
                 {/* HERO DASHBOARD MOCKUP */}
-                <div className="relative w-full max-w-5xl aspect-[16/9] group">
+                <div className="relative w-full max-w-5xl aspect-video group">
                     {/* Main Dashboard Card */}
                     <div className="relative w-full h-full bg-[#0a0a0a] border border-white/10 rounded-xl overflow-hidden shadow-2xl">
                         {/* Fake Browser Header */}
-                        <div className="h-10 bg-[#000] border-b border-white/10 flex items-center px-4 justify-between">
+                        <div className="h-10 bg-black border-b border-white/10 flex items-center px-4 justify-between">
                             <div className="flex gap-2">
                                 <div className="w-3 h-3 rounded-full bg-zinc-800" />
                                 <div className="w-3 h-3 rounded-full bg-zinc-800" />
@@ -253,7 +253,6 @@ const LandingPage = () => {
     );
 };
 
-// Replaced Icon with Number for professional look
 const FeatureCard = ({ number, title, description }) => (
     <div className="bg-[#050505] p-10 hover:bg-[#0a0a0a] transition-colors group">
         <div className="text-zinc-600 font-mono text-sm mb-6 group-hover:text-white transition-colors">
