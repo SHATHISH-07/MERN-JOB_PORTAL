@@ -40,7 +40,7 @@ const Sidebar = () => {
             ]
             : [
                 {
-                    label: "job Posts",
+                    label: "Manage Jobs",
                     icon: Briefcase,
                     path: "/employer/jobs",
                 },
