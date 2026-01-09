@@ -3,7 +3,7 @@ import { AuthContext } from "../context/AuthContext";
 import { getJobSeekerProfile } from "../api/jobSeekerProfile";
 
 const Dashboard = () => {
-    const { user, logout } = useContext(AuthContext);
+    const { user } = useContext(AuthContext);
     const token = localStorage.getItem("token");
 
     const [profileCompletion, setProfileCompletion] = useState(0);
@@ -78,12 +78,7 @@ const Dashboard = () => {
                 <h1 className="text-2xl font-bold">
                     {user.role === "EMPLOYER" ? "Employer Dashboard" : "Candidate Dashboard"}
                 </h1>
-                <button
-                    onClick={logout}
-                    className="bg-white text-black px-4 py-2 rounded-lg font-medium"
-                >
-                    Logout
-                </button>
+
             </div>
 
             {/* ---------------- JOB SEEKER DASHBOARD ---------------- */}
