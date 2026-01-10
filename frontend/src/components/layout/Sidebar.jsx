@@ -30,12 +30,18 @@ const Sidebar = () => {
             icon: User,
             path: "/profile",
         },
+
         ...(user.role === "JOB_SEEKER"
             ? [
                 {
                     label: "Browse Jobs",
                     icon: Search,
                     path: "/jobs",
+                },
+                {
+                    label: "Applied Jobs",
+                    icon: Briefcase,
+                    path: "/applications",
                 },
             ]
             : [
@@ -46,6 +52,8 @@ const Sidebar = () => {
                 },
             ]),
     ];
+
+
 
     return (
         <>

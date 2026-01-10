@@ -103,10 +103,14 @@ const JobDetails = () => {
                         </div>
 
                         <div className="flex gap-3 md:self-center shrink-0">
-                            <button className="p-3 rounded-lg border border-zinc-700 hover:bg-zinc-800 text-zinc-400 hover:text-white transition-all">
+                            <button
+
+                                className="p-3 rounded-lg border border-zinc-700 hover:bg-zinc-800 text-zinc-400 hover:text-white transition-all">
                                 <Share2 size={20} />
                             </button>
-                            <button className="bg-white hover:bg-zinc-200 text-black font-bold px-8 py-3 rounded-lg transition-all shadow-[0_0_20px_rgba(255,255,255,0.15)] hover:shadow-[0_0_25px_rgba(255,255,255,0.25)]">
+                            <button
+                                onClick={() => navigate(`/jobs/${job._id}/apply`)}
+                                className="bg-white hover:bg-zinc-200 text-black font-bold px-8 py-3 rounded-lg transition-all shadow-[0_0_20px_rgba(255,255,255,0.15)] hover:shadow-[0_0_25px_rgba(255,255,255,0.25)]">
                                 Apply Now
                             </button>
                         </div>

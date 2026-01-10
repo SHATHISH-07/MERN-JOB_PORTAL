@@ -4,6 +4,7 @@ import authRoutes from "./routes/auth.route.js";
 import jobSeekerProfileRoutes from "./routes/jobSeekerProfile.route.js";
 import employerProfileRoutes from "./routes/employerProfile.route.js";
 import jobListingRoutes from "./routes/jobListing.route.js";
+import jobApplicationRoutes from "./routes/jobApplication.route.js";
 
 const app = express();
 app.use(cors());
@@ -15,5 +16,7 @@ app.use("/api/jobseeker/profile", jobSeekerProfileRoutes);
 app.use("/api/employer/profile", employerProfileRoutes);
 
 app.use("/api/jobs", jobListingRoutes);
+
+app.use("/api/applications", jobApplicationRoutes);
 
 export default app;

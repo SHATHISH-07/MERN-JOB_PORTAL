@@ -18,6 +18,9 @@ import MyJobs from "./pages/jobs/MyJobs";
 import CreateJob from "./pages/jobs/CreateJob";
 import EditJob from "./pages/jobs/EditJob";
 import JobDetails from "./pages/jobs/JobDetails";
+import ApplyJob from "./pages/jobs/ApplyJob";
+import AppliedJobs from "./pages/jobs/AppliedJobs";
+import JobApplicants from "./pages/jobs/JobApplicants";
 
 const ProtectedRoute = ({ children }) => {
   const { user, loading } = useContext(AuthContext);
@@ -84,7 +87,6 @@ function App() {
         />
 
         {/* Job Seeker Routes */}
-        {/* Job Seeker Routes */}
         <Route
           path="/jobs"
           element={
@@ -150,6 +152,46 @@ function App() {
             </ProtectedRoute>
           }
         />
+
+        <Route
+          path="/jobs/:id/apply"
+          element={
+            <ProtectedRoute>
+              <RoleRoute allowedRole="JOB_SEEKER">
+                <AppLayout>
+                  <ApplyJob />
+                </AppLayout>
+              </RoleRoute>
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/applications"
+          element={
+            <ProtectedRoute>
+              <RoleRoute allowedRole="JOB_SEEKER">
+                <AppLayout>
+                  <AppliedJobs />
+                </AppLayout>
+              </RoleRoute>
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/employer/jobs/:jobId/applicants"
+          element={
+            <ProtectedRoute>
+              <RoleRoute allowedRole="EMPLOYER">
+                <AppLayout>
+                  <JobApplicants />
+                </AppLayout>
+              </RoleRoute>
+            </ProtectedRoute>
+          }
+        />
+
 
         {/* Fallback */}
         <Route path="*" element={<Navigate to="/" />} />

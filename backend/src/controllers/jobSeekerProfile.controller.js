@@ -1,4 +1,5 @@
 import JobSeekerProfile from "../models/JobSeekerProfile.js";
+import User from "../models/user.js";
 
 export const createOrUpdateProfile = async (req, res) => {
   const profile = await JobSeekerProfile.findOneAndUpdate(
@@ -11,11 +12,19 @@ export const createOrUpdateProfile = async (req, res) => {
 };
 
 export const getMyProfile = async (req, res) => {
-  const profile = await JobSeekerProfile.findOne({ userId: req.user.id });
+  const profile = await JobSeekerProfile.findOne({
+    userId: req.user.id,
+  });
 
   if (!profile) {
     return res.status(404).json({ message: "Profile not found" });
   }
 
-  res.json(profile);
+  const user = await User.findById(req.user.id).select("email name");
+
+  res.json({
+    ...profile.toObject(),
+    email: user.email,
+    name: user.name,
+  });
 };
